@@ -125,6 +125,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 
+		ShadersHandler.setChrome(1.1);
+		
 		FlxG.camera.follow(camFollowPos, null, 1);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
