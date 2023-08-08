@@ -55,6 +55,7 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import ShadersHandler;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
@@ -290,6 +291,8 @@ class PlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
 
+		ShadersHandler.setChrome(0.0);
+		
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
 		{
@@ -2397,6 +2400,16 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
+		if (ClientPrefs.shaders) {
+			var chromeOffset:Float = ((2 - ((health / 0.5))));
+			chromeOffset /= 350;
+			
+			if (chromeOffset <= 0)
+				chromeOffset = 0.0;
+
+			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+		}
+		
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
 			paused = true;
@@ -2657,6 +2670,8 @@ class PlayState extends MusicBeatState
 
 				paused = true;
 
+				ShadersHandler.setChrome(1.1);
+				
 				vocals.stop();
 				FlxG.sound.music.stop();
 
@@ -3188,6 +3203,7 @@ class PlayState extends MusicBeatState
 
 		deathCounter = 0;
 		seenCutscene = false;
+		ShadersHandler.setChrome(1.1);
 
 		#if ACHIEVEMENTS_ALLOWED
 		if(achievementObj != null) {
@@ -3906,6 +3922,16 @@ class PlayState extends MusicBeatState
 							boyfriend.specialAnim = true;
 						}
 				}
+				if (ClientPrefs.shaders) {
+					   var chromeOffset:Float = ((1 - ((health / health))));
+					   chromeOffset /= 350;
+					   if (chromeOffset <= 0)
+						ShadersHandler.setChrome(0.0);
+					   else
+					   {
+					   ShadersHandler.setChrome(chromeOffset);
+					   }	
+					}
 				
 				note.wasGoodHit = true;
 				if (!note.isSustainNote)
@@ -4242,11 +4268,17 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
+		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+		camHUD.setFilters([ShadersHandler.chromaticAberration]);
+
 		if(lastBeatHit >= curBeat) {
 			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
 			return;
 		}
 
+		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
+		camHUD.setFilters([ShadersHandler.chromaticAberration]);
+		
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
