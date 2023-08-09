@@ -1525,7 +1525,7 @@ class PlayState extends MusicBeatState
 	public var countdownGo:FlxSprite;
 	public static var startOnTime:Float = 0;
 
-	public function startCountdown(elapsed:Float):Void
+	public function startCountdown(elapsed:Float)
 	{
 		if(startedCountdown) {
 			callOnLuas('onStartCountdown', []);
@@ -1755,7 +1755,7 @@ class PlayState extends MusicBeatState
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
 
-	function startSong(elapsed:Float):Void
+	function startSong(elapsed:Float)
 	{
 		startingSong = false;
 
