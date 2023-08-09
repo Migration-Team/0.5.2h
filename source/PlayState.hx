@@ -2401,7 +2401,7 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (ClientPrefs.shaders) {
-			var chromeOffset:Float = ((2 - ((health / 0.5))));
+			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
 			chromeOffset /= 350;
 			
 			if (chromeOffset <= 0)
@@ -4328,6 +4328,16 @@ class PlayState extends MusicBeatState
 		}
 		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
 		{
+			if (ClientPrefs.shaders) {
+			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+			chromeOffset /= 350;
+			
+			if (chromeOffset <= 0)
+				chromeOffset = 0.0;
+
+			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+			}
+			
 			dad.dance();
 		}
 
