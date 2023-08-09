@@ -2403,7 +2403,7 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (ClientPrefs.shaders) {
-			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 1.25), 0, 1)));
 			chromeOffset /= 350;
 			
 			if (chromeOffset <= 0)
