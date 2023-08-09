@@ -1532,6 +1532,16 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
+		if (ClientPrefs.shaders) {
+			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+			chromeOffset /= 350;
+			
+			if (chromeOffset <= 0)
+				chromeOffset = 0.0;
+
+			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+		}
+		
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if(ret != FunkinLua.Function_Stop) {
@@ -1749,6 +1759,16 @@ class PlayState extends MusicBeatState
 	{
 		startingSong = false;
 
+		if (ClientPrefs.shaders) {
+			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+			chromeOffset /= 350;
+			
+			if (chromeOffset <= 0)
+				chromeOffset = 0.0;
+
+			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
+		}
+		
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
