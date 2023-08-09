@@ -1525,22 +1525,13 @@ class PlayState extends MusicBeatState
 	public var countdownGo:FlxSprite;
 	public static var startOnTime:Float = 0;
 
-	public function startCountdown(elapsed:Float)
+	public function startCountdown():Void
 	{
 		if(startedCountdown) {
 			callOnLuas('onStartCountdown', []);
 			return;
 		}
 
-		if (ClientPrefs.shaders) {
-			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
-			chromeOffset /= 350;
-			
-			if (chromeOffset <= 0)
-				chromeOffset = 0.0;
-
-			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
-		}
 		
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
@@ -1755,19 +1746,10 @@ class PlayState extends MusicBeatState
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
 
-	function startSong(elapsed:Float)
+	public function startSong():Void
 	{
 		startingSong = false;
 
-		if (ClientPrefs.shaders) {
-			var chromeOffset:Float = ((2 - CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
-			chromeOffset /= 350;
-			
-			if (chromeOffset <= 0)
-				chromeOffset = 0.0;
-
-			ShadersHandler.setChrome(FlxMath.lerp(ShadersHandler.chromeoffsetthing, chromeOffset, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1)));
-		}
 		
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
